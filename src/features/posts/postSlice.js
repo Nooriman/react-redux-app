@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, nanoid } from "@reduxjs/toolkit";
 
 const initialState = [
   {
@@ -19,11 +19,20 @@ const postsSlice = createSlice({
   name: "posts",
   initialState,
   reducers: {
-    // Write all actions here, what will happen, like youre a customer and want to buy a cake.
     // Actions stored here
-    // Remember to export the actions to postsSlice.action
-    postAdded(state, action) {
-      state.push(action.payload);
+    postAdded: {
+      reducer(state, action) {
+        state.push(action.payload);
+      },
+      prepare(title, content) {
+        return {
+          payload: {
+            id: nanoid(),
+            title,
+            content
+          }
+        }
+      }
     }
   },
 });
